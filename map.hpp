@@ -17,7 +17,7 @@ namespace sdk250
             std::function<bool (K, K)> comp_;
 
         public:
-            Map(std::function<bool (K, K)> comp, std::size_t size = 100) noexcept : comp_(comp)
+            Map(decltype(comp_) comp, std::size_t size = 100) noexcept : comp_(comp)
             {
                 groups_.reserve(size);
             }
@@ -35,7 +35,7 @@ namespace sdk250
 
                 return groups_.insert(it, {k, V{}})->second;
             }
-            typename std::vector<std::pair<K, V>>::iterator erase(const K &v) noexcept
+            typename decltype(groups_)::iterator erase(const K &v) noexcept
             {
                 auto it = find(v);
                 if (it == end())
@@ -43,21 +43,21 @@ namespace sdk250
 
                 return groups_.erase(it);
             }
-            typename std::vector<std::pair<K, V>>::iterator erase(
-                typename std::vector<std::pair<K, V>>::iterator &it
+            typename decltype(groups_)::iterator erase(
+                typename decltype(groups_)::iterator &it
             ) noexcept
             {
                 return groups_.erase(it);
             }
-            typename std::vector<std::pair<K, V>>::iterator begin(void) noexcept
+            typename decltype(groups_)::iterator begin(void) noexcept
             {
                 return groups_.begin();
             }
-            typename std::vector<std::pair<K, V>>::iterator end(void) noexcept
+            typename decltype(groups_)::iterator end(void) noexcept
             {
                 return groups_.end();
             }
-            typename std::vector<std::pair<K, V>>::iterator find(const K &k) noexcept
+            typename decltype(groups_)::iterator find(const K &k) noexcept
             {
                 return std::lower_bound(
                     groups_.begin(),
